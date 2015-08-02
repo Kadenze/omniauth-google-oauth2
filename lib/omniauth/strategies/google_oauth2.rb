@@ -78,7 +78,7 @@ module OmniAuth
                                       verify_iss: true,
                                       iss: ALLOWED_ISSUERS,
                                       verify_aud: true,
-                                      aud: options.client_id,
+                                      aud: options.client_id.try(:call) || options.client_id,
                                       verify_sub: false,
                                       verify_expiration: true,
                                       verify_not_before: true,
