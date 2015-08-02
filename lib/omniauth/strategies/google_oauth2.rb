@@ -29,6 +29,12 @@ module OmniAuth
              authorize_url: 'https://accounts.google.com/o/oauth2/auth',
              token_url: '/token'
 
+      def client
+        client_id = options.client_id.try(:call) || options.client_id
+        client_secret = options.client_secret.try(:call) || options.client_secret
+        ::OAuth2::Client.new(client_id, client_secret, deep_symbolize(options.client_options))
+      end
+
       def authorize_params
         super.tap do |params|
           options[:authorize_options].each do |k|
